@@ -45,10 +45,12 @@ void main() {
 
   test('Mint NFT with given price', () async {
     final contract = await ethManager.getContractAbi(contractId);
+    final price = await ethManager.getNftPrice(contract!);
     final credentials = EthPrivateKey.fromHex(privateKey);
 
     final minted = await ethManager.writeNft(
-      contract: contract!,
+      contract: contract,
+      price: price!,
       credentials: credentials,
     );
 

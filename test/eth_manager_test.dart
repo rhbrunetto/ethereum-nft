@@ -9,7 +9,7 @@ const privateKey =
     '66576e6f3c65b93c656f07967d47d78d612bf52b0e9909f14ded403da0afee8d';
 const rpcUrl = 'https://sepolia.infura.io/v3/dfa1cf1556e641cb8343f5818a34a415';
 const wsUrl = 'wss://sepolia.infura.io/v3/dfa1cf1556e641cb8343f5818a34a415';
-const contractId = '0xb310e62731C5c089ce2a36D2B9D8EeDEAD8DE39d';
+const contractIdHex = '0xb310e62731C5c089ce2a36D2B9D8EeDEAD8DE39d';
 const abiApiUrl = 'https://api-sepolia.etherscan.io/api';
 
 void main() {
@@ -31,12 +31,14 @@ void main() {
   });
 
   test('Retrieve Contract ABI', () async {
+    final contractId = EthereumAddress.fromHex(contractIdHex);
     final contract = await ethManager.getContractAbi(contractId);
 
     expect(contract, isA<DeployedContract>());
   });
 
   test('Retrieve NFT Price', () async {
+    final contractId = EthereumAddress.fromHex(contractIdHex);
     final contract = await ethManager.getContractAbi(contractId);
     final price = await ethManager.getNftPrice(contract!);
 
@@ -44,6 +46,7 @@ void main() {
   });
 
   test('Mint NFT with given price', () async {
+    final contractId = EthereumAddress.fromHex(contractIdHex);
     final contract = await ethManager.getContractAbi(contractId);
     final price = await ethManager.getNftPrice(contract!);
     final credentials = EthPrivateKey.fromHex(privateKey);

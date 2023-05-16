@@ -8,13 +8,13 @@ class EthManager {
 
   final EthProvider _provider;
 
-  Future<DeployedContract?> getContractAbi(String contractId) async {
+  Future<DeployedContract?> getContractAbi(EthereumAddress contractId) async {
     try {
       final abiUrl = Uri.parse(_provider.abiBaseUrl).replace(
         queryParameters: {
           'module': 'contract',
           'action': 'getabi',
-          'address': contractId,
+          'address': contractId.hex,
         },
       );
 
@@ -26,7 +26,7 @@ class EthManager {
 
       return DeployedContract(
         ContractAbi.fromJson(contractAbi, 'NFT'),
-        EthereumAddress.fromHex(contractId),
+        contractId,
       );
     } on Exception {
       return null;

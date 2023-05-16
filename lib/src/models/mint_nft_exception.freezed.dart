@@ -14,6 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+MintNftException _$MintNftExceptionFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'invalidAbi':
+      return InvalidAbiException.fromJson(json);
+    case 'noPrice':
+      return NoPriceException.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'MintNftException',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
 /// @nodoc
 mixin _$MintNftException {
   @optionalTypeArgs
@@ -54,6 +67,7 @@ mixin _$MintNftException {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -91,9 +105,16 @@ class __$$InvalidAbiExceptionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$InvalidAbiException implements InvalidAbiException {
-  const _$InvalidAbiException();
+  const _$InvalidAbiException({final String? $type})
+      : $type = $type ?? 'invalidAbi';
+
+  factory _$InvalidAbiException.fromJson(Map<String, dynamic> json) =>
+      _$$InvalidAbiExceptionFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -106,6 +127,7 @@ class _$InvalidAbiException implements InvalidAbiException {
         (other.runtimeType == runtimeType && other is _$InvalidAbiException);
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => runtimeType.hashCode;
 
@@ -170,10 +192,20 @@ class _$InvalidAbiException implements InvalidAbiException {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InvalidAbiExceptionToJson(
+      this,
+    );
+  }
 }
 
 abstract class InvalidAbiException implements MintNftException {
   const factory InvalidAbiException() = _$InvalidAbiException;
+
+  factory InvalidAbiException.fromJson(Map<String, dynamic> json) =
+      _$InvalidAbiException.fromJson;
 }
 
 /// @nodoc
@@ -193,9 +225,15 @@ class __$$NoPriceExceptionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$NoPriceException implements NoPriceException {
-  const _$NoPriceException();
+  const _$NoPriceException({final String? $type}) : $type = $type ?? 'noPrice';
+
+  factory _$NoPriceException.fromJson(Map<String, dynamic> json) =>
+      _$$NoPriceExceptionFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -208,6 +246,7 @@ class _$NoPriceException implements NoPriceException {
         (other.runtimeType == runtimeType && other is _$NoPriceException);
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => runtimeType.hashCode;
 
@@ -272,8 +311,18 @@ class _$NoPriceException implements NoPriceException {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NoPriceExceptionToJson(
+      this,
+    );
+  }
 }
 
 abstract class NoPriceException implements MintNftException {
   const factory NoPriceException() = _$NoPriceException;
+
+  factory NoPriceException.fromJson(Map<String, dynamic> json) =
+      _$NoPriceException.fromJson;
 }

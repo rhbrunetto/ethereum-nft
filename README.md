@@ -1,2 +1,8 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+# Ethereum NFT Microservice
+
+To build this project, run:
+
+```
+$ make dart_get
+$ make dart_build
+```

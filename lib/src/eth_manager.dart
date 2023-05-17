@@ -52,7 +52,7 @@ class EthManager {
   Future<bool> writeNft({
     required DeployedContract contract,
     required EthPrivateKey credentials,
-    required BigInt price,
+    required Uri asset,
   }) async {
     try {
       final chainId = await _provider.web3client.getChainId();
@@ -64,9 +64,11 @@ class EthManager {
         Transaction.callContract(
           contract: contract,
           function: mintFunction,
-          value: EtherAmount.fromBigInt(EtherUnit.wei, price),
           from: credentials.address,
-          parameters: [],
+          parameters: [
+            credentials.address,
+            asset.toString(),
+          ],
         ),
         chainId: chainId.toInt(),
       );

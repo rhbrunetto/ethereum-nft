@@ -20,6 +20,8 @@ MintNftException _$MintNftExceptionFromJson(Map<String, dynamic> json) {
       return InvalidAbiException.fromJson(json);
     case 'noPrice':
       return NoPriceException.fromJson(json);
+    case 'retrieveAsset':
+      return RetrieveAssetException.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'MintNftException',
@@ -33,18 +35,21 @@ mixin _$MintNftException {
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
     required TResult Function() noPrice,
+    required TResult Function() retrieveAsset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
     TResult? Function()? noPrice,
+    TResult? Function()? retrieveAsset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
     TResult Function()? noPrice,
+    TResult Function()? retrieveAsset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -52,18 +57,21 @@ mixin _$MintNftException {
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
     required TResult Function(NoPriceException value) noPrice,
+    required TResult Function(RetrieveAssetException value) retrieveAsset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
     TResult? Function(NoPriceException value)? noPrice,
+    TResult? Function(RetrieveAssetException value)? retrieveAsset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
     TResult Function(NoPriceException value)? noPrice,
+    TResult Function(RetrieveAssetException value)? retrieveAsset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -136,6 +144,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
     required TResult Function() noPrice,
+    required TResult Function() retrieveAsset,
   }) {
     return invalidAbi();
   }
@@ -145,6 +154,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
     TResult? Function()? noPrice,
+    TResult? Function()? retrieveAsset,
   }) {
     return invalidAbi?.call();
   }
@@ -154,6 +164,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
     TResult Function()? noPrice,
+    TResult Function()? retrieveAsset,
     required TResult orElse(),
   }) {
     if (invalidAbi != null) {
@@ -167,6 +178,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
     required TResult Function(NoPriceException value) noPrice,
+    required TResult Function(RetrieveAssetException value) retrieveAsset,
   }) {
     return invalidAbi(this);
   }
@@ -176,6 +188,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
     TResult? Function(NoPriceException value)? noPrice,
+    TResult? Function(RetrieveAssetException value)? retrieveAsset,
   }) {
     return invalidAbi?.call(this);
   }
@@ -185,6 +198,7 @@ class _$InvalidAbiException implements InvalidAbiException {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
     TResult Function(NoPriceException value)? noPrice,
+    TResult Function(RetrieveAssetException value)? retrieveAsset,
     required TResult orElse(),
   }) {
     if (invalidAbi != null) {
@@ -255,6 +269,7 @@ class _$NoPriceException implements NoPriceException {
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
     required TResult Function() noPrice,
+    required TResult Function() retrieveAsset,
   }) {
     return noPrice();
   }
@@ -264,6 +279,7 @@ class _$NoPriceException implements NoPriceException {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
     TResult? Function()? noPrice,
+    TResult? Function()? retrieveAsset,
   }) {
     return noPrice?.call();
   }
@@ -273,6 +289,7 @@ class _$NoPriceException implements NoPriceException {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
     TResult Function()? noPrice,
+    TResult Function()? retrieveAsset,
     required TResult orElse(),
   }) {
     if (noPrice != null) {
@@ -286,6 +303,7 @@ class _$NoPriceException implements NoPriceException {
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
     required TResult Function(NoPriceException value) noPrice,
+    required TResult Function(RetrieveAssetException value) retrieveAsset,
   }) {
     return noPrice(this);
   }
@@ -295,6 +313,7 @@ class _$NoPriceException implements NoPriceException {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
     TResult? Function(NoPriceException value)? noPrice,
+    TResult? Function(RetrieveAssetException value)? retrieveAsset,
   }) {
     return noPrice?.call(this);
   }
@@ -304,6 +323,7 @@ class _$NoPriceException implements NoPriceException {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
     TResult Function(NoPriceException value)? noPrice,
+    TResult Function(RetrieveAssetException value)? retrieveAsset,
     required TResult orElse(),
   }) {
     if (noPrice != null) {
@@ -325,4 +345,130 @@ abstract class NoPriceException implements MintNftException {
 
   factory NoPriceException.fromJson(Map<String, dynamic> json) =
       _$NoPriceException.fromJson;
+}
+
+/// @nodoc
+abstract class _$$RetrieveAssetExceptionCopyWith<$Res> {
+  factory _$$RetrieveAssetExceptionCopyWith(_$RetrieveAssetException value,
+          $Res Function(_$RetrieveAssetException) then) =
+      __$$RetrieveAssetExceptionCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RetrieveAssetExceptionCopyWithImpl<$Res>
+    extends _$MintNftExceptionCopyWithImpl<$Res, _$RetrieveAssetException>
+    implements _$$RetrieveAssetExceptionCopyWith<$Res> {
+  __$$RetrieveAssetExceptionCopyWithImpl(_$RetrieveAssetException _value,
+      $Res Function(_$RetrieveAssetException) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RetrieveAssetException implements RetrieveAssetException {
+  const _$RetrieveAssetException({final String? $type})
+      : $type = $type ?? 'retrieveAsset';
+
+  factory _$RetrieveAssetException.fromJson(Map<String, dynamic> json) =>
+      _$$RetrieveAssetExceptionFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'MintNftException.retrieveAsset()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$RetrieveAssetException);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() invalidAbi,
+    required TResult Function() noPrice,
+    required TResult Function() retrieveAsset,
+  }) {
+    return retrieveAsset();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? invalidAbi,
+    TResult? Function()? noPrice,
+    TResult? Function()? retrieveAsset,
+  }) {
+    return retrieveAsset?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? invalidAbi,
+    TResult Function()? noPrice,
+    TResult Function()? retrieveAsset,
+    required TResult orElse(),
+  }) {
+    if (retrieveAsset != null) {
+      return retrieveAsset();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidAbiException value) invalidAbi,
+    required TResult Function(NoPriceException value) noPrice,
+    required TResult Function(RetrieveAssetException value) retrieveAsset,
+  }) {
+    return retrieveAsset(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidAbiException value)? invalidAbi,
+    TResult? Function(NoPriceException value)? noPrice,
+    TResult? Function(RetrieveAssetException value)? retrieveAsset,
+  }) {
+    return retrieveAsset?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidAbiException value)? invalidAbi,
+    TResult Function(NoPriceException value)? noPrice,
+    TResult Function(RetrieveAssetException value)? retrieveAsset,
+    required TResult orElse(),
+  }) {
+    if (retrieveAsset != null) {
+      return retrieveAsset(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RetrieveAssetExceptionToJson(
+      this,
+    );
+  }
+}
+
+abstract class RetrieveAssetException implements MintNftException {
+  const factory RetrieveAssetException() = _$RetrieveAssetException;
+
+  factory RetrieveAssetException.fromJson(Map<String, dynamic> json) =
+      _$RetrieveAssetException.fromJson;
 }

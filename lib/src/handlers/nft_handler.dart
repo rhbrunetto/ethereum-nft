@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:http/http.dart' as http;
+import 'package:nft/src/dto/mint_nft.dart';
 import 'package:nft/src/eth_manager.dart';
+import 'package:nft/src/ipfs_manager.dart';
 import 'package:nft/src/models/eth_provider.dart';
 import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:nft/src/utils.dart';
@@ -32,6 +35,7 @@ Handler addNftHandler() {
           '/mintNft',
           (it) => _nftRouteHandler(
             it,
+            ipfsManager: IpfsManager(),
             ethManager: EthManager(provider),
             contractId: EthereumAddress.fromHex(contractId),
             credentials: EthPrivateKey.fromHex(privateKey),
@@ -43,23 +47,29 @@ Handler addNftHandler() {
 Future<Response> _nftRouteHandler(
   Request request, {
   required EthManager ethManager,
+  required IpfsManager ipfsManager,
   required EthereumAddress contractId,
   required EthPrivateKey credentials,
 }) async =>
-    processRequest<Json, Json>(
+    processRequest<MintNftRequest, Json>(
       request,
-      (i) => i,
+      MintNftRequest.fromJson,
       (data) async {
         final contract = await ethManager.getContractAbi(contractId);
         if (contract == null) throw MintNftException.invalidAbi();
 
-        final price = await ethManager.getNftPrice(contract);
-        if (price == null) throw MintNftException.noPrice();
+        final metadata = await ipfsManager.retrieveOrUploadAsset(
+          data.name,
+          data.image,
+        );
+        if (metadata == null) throw MintNftException.retrieveAsset();
+
+        log(metadata.toString());
 
         await ethManager.writeNft(
           contract: contract,
-          price: price,
           credentials: credentials,
+          asset: metadata,
         );
 
         return {};

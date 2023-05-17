@@ -27,3 +27,15 @@ Map<String, dynamic> _$$NoPriceExceptionToJson(_$NoPriceException instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
+
+_$RetrieveAssetException _$$RetrieveAssetExceptionFromJson(
+        Map<String, dynamic> json) =>
+    _$RetrieveAssetException(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$RetrieveAssetExceptionToJson(
+        _$RetrieveAssetException instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };

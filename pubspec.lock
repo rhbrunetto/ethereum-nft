@@ -385,6 +385,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  pinata:
+    dependency: "direct main"
+    description:
+      name: pinata
+      sha256: "6c77d635e6199f5fac408da26e3587f45a6545fae559842eebccb1150fd3378d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+5"
   pointycastle:
     dependency: transitive
     description:
@@ -417,6 +425,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  qp_xt:
+    dependency: transitive
+    description:
+      name: qp_xt
+      sha256: "35a05cd1f247d556dbaaba88ec25e9e14cafe8de508948e4454bace0c4bc8a92"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2+2"
+  recase:
+    dependency: "direct main"
+    description:
+      name: recase
+      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   sec:
     dependency: transitive
     description:

@@ -11,6 +11,8 @@ dependencies:
   bip39: ^1.0.6
   freezed_annotation: ^2.2.0
   http: ^0.13.6
+  pinata: ^0.0.1+5
+  recase: ^4.1.0
   shelf: ^1.4.1
   shelf_router: ^1.1.4
   web3dart: ^2.6.1

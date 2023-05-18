@@ -76,9 +76,16 @@ Future<Response> _nftRouteHandler(
           count: count,
         );
 
-        await Sentry.captureMessage(
-          'Minted new NFT for ${data.identifier} (${data.title})',
-          level: SentryLevel.info,
+        await Sentry.captureEvent(
+          SentryEvent(
+            environment: contractId.hex,
+            level: SentryLevel.info,
+            message: SentryMessage('Minted new NFT'),
+          ),
+          withScope: (scope) => scope
+            ..setExtra('identifier', normalizedIdentifier)
+            ..setExtra('title', data.title)
+            ..setExtra('sequenceNumber', sequenceNumber),
         );
 
         return {};

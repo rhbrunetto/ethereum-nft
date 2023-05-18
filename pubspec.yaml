@@ -11,9 +11,11 @@ dependencies:
   bip39: ^1.0.6
   freezed_annotation: ^2.2.0
   http: ^0.13.6
+  logging: ^1.1.1
   pinata: ^0.0.1+5
   recase: ^4.1.0
   sentry: ^7.6.1
+  sentry_logging: ^7.6.1
   shelf: ^1.4.1
   shelf_router: ^1.1.4
   web3dart: ^2.6.1

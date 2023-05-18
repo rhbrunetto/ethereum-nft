@@ -18,16 +18,6 @@ Map<String, dynamic> _$$InvalidAbiExceptionToJson(
       'runtimeType': instance.$type,
     };
 
-_$NoPriceException _$$NoPriceExceptionFromJson(Map<String, dynamic> json) =>
-    _$NoPriceException(
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$NoPriceExceptionToJson(_$NoPriceException instance) =>
-    <String, dynamic>{
-      'runtimeType': instance.$type,
-    };
-
 _$RetrieveAssetException _$$RetrieveAssetExceptionFromJson(
         Map<String, dynamic> json) =>
     _$RetrieveAssetException(
@@ -36,6 +26,18 @@ _$RetrieveAssetException _$$RetrieveAssetExceptionFromJson(
 
 Map<String, dynamic> _$$RetrieveAssetExceptionToJson(
         _$RetrieveAssetException instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$SmartContractException _$$SmartContractExceptionFromJson(
+        Map<String, dynamic> json) =>
+    _$SmartContractException(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$SmartContractExceptionToJson(
+        _$SmartContractException instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:http/http.dart' as http;
@@ -8,6 +7,7 @@ import 'package:nft/src/ipfs_manager.dart';
 import 'package:nft/src/models/eth_provider.dart';
 import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:nft/src/utils.dart';
+import 'package:sentry/sentry.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
 import 'package:web3dart/web3dart.dart';
@@ -67,12 +67,16 @@ Future<Response> _nftRouteHandler(
         );
         if (metadata == null) throw MintNftException.retrieveAsset();
 
-        log(metadata.toString());
-
-        await ethManager.writeNft(
+        final minted = await ethManager.writeNft(
           contract: contract,
           credentials: credentials,
           asset: metadata,
+        );
+        if (!minted) throw MintNftException.smartContractFailed();
+
+        await Sentry.captureMessage(
+          'Minted new NFT for ${data.identifier} (${data.title})',
+          level: SentryLevel.info,
         );
 
         return {};

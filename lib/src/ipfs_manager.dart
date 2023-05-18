@@ -48,25 +48,21 @@ class IpfsManager {
         .then((it) => it.firstOrNull);
 
     if (commonImageIpfs != null) {
-      // Common image already exists, so update counter and return it
-      final count = commonImageIpfs.metaAt<int>(_countKey) ?? 1;
-      await commonImageIpfs.updateMeta(meta: {_countKey: count + 1});
+      final count = (commonImageIpfs.metaAt<int>(_countKey) ?? 1) + 1;
+      await commonImageIpfs.updateMeta(meta: {_countKey: count});
 
       return (commonImageIpfs.address, count);
     }
 
-    // Common image does not exist yet, so let's check for the first image
     final firstImageName = _buildFirstImageName(normalizedIdentifier);
     final firstImageIpfs = await _pinata
         .queryPins(name: firstImageName) //
         .then((it) => it.firstOrNull);
 
     if (firstImageIpfs != null) {
-      // First image already exists, should create the common image
       return _createImage(commonImageName, commonImageUri, 2);
     }
 
-    // This is the first NFT image
     return _createImage(firstImageName, firstImageUri, 1);
   }
 

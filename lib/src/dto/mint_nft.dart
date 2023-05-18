@@ -6,7 +6,8 @@ part 'mint_nft.g.dart';
 @freezed
 class MintNftRequest with _$MintNftRequest {
   const factory MintNftRequest({
-    required String name,
+    required String identifier,
+    required String title,
     required Uri image,
   }) = _MintNftRequiest;
 

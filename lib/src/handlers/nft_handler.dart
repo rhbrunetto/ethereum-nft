@@ -59,8 +59,9 @@ Future<Response> _nftRouteHandler(
         if (contract == null) throw MintNftException.invalidAbi();
 
         final metadata = await ipfsManager.retrieveOrUploadAsset(
-          data.name,
-          data.image,
+          identifier: data.identifier,
+          name: data.title,
+          image: data.image,
         );
         if (metadata == null) throw MintNftException.retrieveAsset();
 

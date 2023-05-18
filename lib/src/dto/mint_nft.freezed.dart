@@ -20,7 +20,8 @@ MintNftRequest _$MintNftRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MintNftRequest {
-  String get name => throw _privateConstructorUsedError;
+  String get identifier => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   Uri get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +36,7 @@ abstract class $MintNftRequestCopyWith<$Res> {
           MintNftRequest value, $Res Function(MintNftRequest) then) =
       _$MintNftRequestCopyWithImpl<$Res, MintNftRequest>;
   @useResult
-  $Res call({String name, Uri image});
+  $Res call({String identifier, String title, Uri image});
 }
 
 /// @nodoc
@@ -51,13 +52,18 @@ class _$MintNftRequestCopyWithImpl<$Res, $Val extends MintNftRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? identifier = null,
+    Object? title = null,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      identifier: null == identifier
+          ? _value.identifier
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       image: null == image
           ? _value.image
@@ -75,7 +81,7 @@ abstract class _$$_MintNftRequiestCopyWith<$Res>
       __$$_MintNftRequiestCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, Uri image});
+  $Res call({String identifier, String title, Uri image});
 }
 
 /// @nodoc
@@ -89,13 +95,18 @@ class __$$_MintNftRequiestCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? identifier = null,
+    Object? title = null,
     Object? image = null,
   }) {
     return _then(_$_MintNftRequiest(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      identifier: null == identifier
+          ? _value.identifier
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       image: null == image
           ? _value.image
@@ -108,19 +119,22 @@ class __$$_MintNftRequiestCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MintNftRequiest implements _MintNftRequiest {
-  const _$_MintNftRequiest({required this.name, required this.image});
+  const _$_MintNftRequiest(
+      {required this.identifier, required this.title, required this.image});
 
   factory _$_MintNftRequiest.fromJson(Map<String, dynamic> json) =>
       _$$_MintNftRequiestFromJson(json);
 
   @override
-  final String name;
+  final String identifier;
+  @override
+  final String title;
   @override
   final Uri image;
 
   @override
   String toString() {
-    return 'MintNftRequest(name: $name, image: $image)';
+    return 'MintNftRequest(identifier: $identifier, title: $title, image: $image)';
   }
 
   @override
@@ -128,13 +142,15 @@ class _$_MintNftRequiest implements _MintNftRequiest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MintNftRequiest &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, image);
+  int get hashCode => Object.hash(runtimeType, identifier, title, image);
 
   @JsonKey(ignore: true)
   @override
@@ -152,14 +168,17 @@ class _$_MintNftRequiest implements _MintNftRequiest {
 
 abstract class _MintNftRequiest implements MintNftRequest {
   const factory _MintNftRequiest(
-      {required final String name,
+      {required final String identifier,
+      required final String title,
       required final Uri image}) = _$_MintNftRequiest;
 
   factory _MintNftRequiest.fromJson(Map<String, dynamic> json) =
       _$_MintNftRequiest.fromJson;
 
   @override
-  String get name;
+  String get identifier;
+  @override
+  String get title;
   @override
   Uri get image;
   @override

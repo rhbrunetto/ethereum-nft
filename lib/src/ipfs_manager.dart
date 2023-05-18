@@ -8,7 +8,11 @@ import 'package:pinata/pinata.dart';
 import 'package:recase/recase.dart';
 
 class IpfsManager {
-  Future<Uri?> retrieveOrUploadAsset(String identifier, Uri image) async {
+  Future<Uri?> retrieveOrUploadAsset({
+    required String identifier,
+    required String name,
+    required Uri image,
+  }) async {
     try {
       final normalizedIdentifier = identifier.paramCase;
       final metadataName = _buildMetadataName(normalizedIdentifier);
@@ -21,7 +25,7 @@ class IpfsManager {
       if (existingIpfs != null) {
         ipfsAddress = existingIpfs;
       } else {
-        ipfsAddress = await _createAsset(normalizedIdentifier, image)
+        ipfsAddress = await _createAsset(normalizedIdentifier, name, image)
             .then((it) => it.address);
       }
 
@@ -33,7 +37,11 @@ class IpfsManager {
     }
   }
 
-  Future<PinLink> _createAsset(String identifier, Uri image) async {
+  Future<PinLink> _createAsset(
+    String identifier,
+    String name,
+    Uri image,
+  ) async {
     // Upload image
     final imageBytes = await http.get(image).then((it) => it.bodyBytes);
     final imagePin = await _pinata.pinBytes(
@@ -43,7 +51,7 @@ class IpfsManager {
 
     // Uploads and returns Metadata
     final metadataJson = {
-      'name': identifier,
+      'name': name,
       'image': _buildIpfsUri(imagePin.address).toString(),
     };
 

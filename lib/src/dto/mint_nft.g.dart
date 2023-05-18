@@ -8,12 +8,14 @@ part of 'mint_nft.dart';
 
 _$_MintNftRequiest _$$_MintNftRequiestFromJson(Map<String, dynamic> json) =>
     _$_MintNftRequiest(
-      name: json['name'] as String,
+      identifier: json['identifier'] as String,
+      title: json['title'] as String,
       image: Uri.parse(json['image'] as String),
     );
 
 Map<String, dynamic> _$$_MintNftRequiestToJson(_$_MintNftRequiest instance) =>
     <String, dynamic>{
-      'name': instance.name,
+      'identifier': instance.identifier,
+      'title': instance.title,
       'image': instance.image.toString(),
     };

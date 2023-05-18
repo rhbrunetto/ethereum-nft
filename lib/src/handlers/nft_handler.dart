@@ -5,17 +5,15 @@ import 'package:nft/src/dto/mint_nft.dart';
 import 'package:nft/src/eth_manager.dart';
 import 'package:nft/src/ipfs_manager.dart';
 import 'package:nft/src/models/eth_provider.dart';
-import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:nft/src/utils.dart';
+import 'package:recase/recase.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
 import 'package:web3dart/web3dart.dart';
-import 'package:web_socket_channel/io.dart';
 
 Handler addNftHandler() {
   final rpcUrl = io.Platform.environment['RPC_URL'] ?? '';
-  final wsUrl = io.Platform.environment['WS_URL'] ?? '';
   final abiUrl = io.Platform.environment['ABI_URL'] ?? '';
   final privateKey = io.Platform.environment['PRIVATE_KEY'] ?? '';
   final contractId = io.Platform.environment['CONTRACT_ID'] ?? '';
@@ -23,11 +21,7 @@ Handler addNftHandler() {
   final provider = EthProvider(
     abiBaseUrl: abiUrl,
     httpClient: http.Client(),
-    web3client: Web3Client(
-      rpcUrl,
-      http.Client(),
-      socketConnector: () => IOWebSocketChannel.connect(wsUrl).cast<String>(),
-    ),
+    web3client: Web3Client(rpcUrl, http.Client()),
   );
 
   return (shelf_router.Router()
@@ -55,24 +49,32 @@ Future<Response> _nftRouteHandler(
       request,
       MintNftRequestDto.fromJson,
       (data) async {
+        final normalizedIdentifier = data.identifier.paramCase;
         final contract = await ethManager.getContractAbi(contractId);
-        if (contract == null) throw MintNftException.invalidAbi();
 
-        final metadata = await ipfsManager.retrieveOrUploadAsset(
-          identifier: data.identifier,
+        final count = await ethManager.getCount(
+          contract: contract,
+          normalizedIdentifier: normalizedIdentifier,
+        );
+
+        // The number displayed on NFT's title is count+1 (0 -> Name1)
+        final sequenceNumber = count.toInt() + 1;
+        final metadata = await ipfsManager.pinAssets(
+          identifier: normalizedIdentifier,
+          sequenceNumber: sequenceNumber,
           name: data.title,
           firstImage: data.imageSet.firstNftImage,
           commonImage: data.imageSet.commonNftImage,
           description: data.description,
         );
-        if (metadata == null) throw MintNftException.retrieveAsset();
 
-        final minted = await ethManager.writeNft(
+        await ethManager.writeNft(
           contract: contract,
           credentials: credentials,
           asset: metadata,
+          identifier: normalizedIdentifier,
+          count: count,
         );
-        if (!minted) throw MintNftException.smartContractFailed();
 
         await Sentry.captureMessage(
           'Minted new NFT for ${data.identifier} (${data.title})',

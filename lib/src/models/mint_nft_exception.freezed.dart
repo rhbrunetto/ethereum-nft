@@ -18,10 +18,14 @@ MintNftException _$MintNftExceptionFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'invalidAbi':
       return InvalidAbiException.fromJson(json);
-    case 'retrieveAsset':
-      return RetrieveAssetException.fromJson(json);
-    case 'smartContractFailed':
-      return SmartContractException.fromJson(json);
+    case 'invalidAsset':
+      return InvalidAssetException.fromJson(json);
+    case 'countFailed':
+      return CountFailedException.fromJson(json);
+    case 'mintFailed':
+      return MintFailedException.fromJson(json);
+    case 'inconsistentCount':
+      return InconsistentCountException.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'MintNftException',
@@ -34,44 +38,57 @@ mixin _$MintNftException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
-    required TResult Function() retrieveAsset,
-    required TResult Function() smartContractFailed,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
-    TResult? Function()? retrieveAsset,
-    TResult? Function()? smartContractFailed,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
-    TResult Function()? retrieveAsset,
-    TResult Function()? smartContractFailed,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
-    required TResult Function(RetrieveAssetException value) retrieveAsset,
-    required TResult Function(SmartContractException value) smartContractFailed,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
-    TResult? Function(RetrieveAssetException value)? retrieveAsset,
-    TResult? Function(SmartContractException value)? smartContractFailed,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
-    TResult Function(RetrieveAssetException value)? retrieveAsset,
-    TResult Function(SmartContractException value)? smartContractFailed,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -143,8 +160,10 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
-    required TResult Function() retrieveAsset,
-    required TResult Function() smartContractFailed,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
   }) {
     return invalidAbi();
   }
@@ -153,8 +172,10 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
-    TResult? Function()? retrieveAsset,
-    TResult? Function()? smartContractFailed,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
   }) {
     return invalidAbi?.call();
   }
@@ -163,8 +184,10 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
-    TResult Function()? retrieveAsset,
-    TResult Function()? smartContractFailed,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
     required TResult orElse(),
   }) {
     if (invalidAbi != null) {
@@ -177,8 +200,11 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
-    required TResult Function(RetrieveAssetException value) retrieveAsset,
-    required TResult Function(SmartContractException value) smartContractFailed,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
   }) {
     return invalidAbi(this);
   }
@@ -187,8 +213,10 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
-    TResult? Function(RetrieveAssetException value)? retrieveAsset,
-    TResult? Function(SmartContractException value)? smartContractFailed,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
   }) {
     return invalidAbi?.call(this);
   }
@@ -197,8 +225,10 @@ class _$InvalidAbiException implements InvalidAbiException {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
-    TResult Function(RetrieveAssetException value)? retrieveAsset,
-    TResult Function(SmartContractException value)? smartContractFailed,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
     required TResult orElse(),
   }) {
     if (invalidAbi != null) {
@@ -223,42 +253,42 @@ abstract class InvalidAbiException implements MintNftException {
 }
 
 /// @nodoc
-abstract class _$$RetrieveAssetExceptionCopyWith<$Res> {
-  factory _$$RetrieveAssetExceptionCopyWith(_$RetrieveAssetException value,
-          $Res Function(_$RetrieveAssetException) then) =
-      __$$RetrieveAssetExceptionCopyWithImpl<$Res>;
+abstract class _$$InvalidAssetExceptionCopyWith<$Res> {
+  factory _$$InvalidAssetExceptionCopyWith(_$InvalidAssetException value,
+          $Res Function(_$InvalidAssetException) then) =
+      __$$InvalidAssetExceptionCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RetrieveAssetExceptionCopyWithImpl<$Res>
-    extends _$MintNftExceptionCopyWithImpl<$Res, _$RetrieveAssetException>
-    implements _$$RetrieveAssetExceptionCopyWith<$Res> {
-  __$$RetrieveAssetExceptionCopyWithImpl(_$RetrieveAssetException _value,
-      $Res Function(_$RetrieveAssetException) _then)
+class __$$InvalidAssetExceptionCopyWithImpl<$Res>
+    extends _$MintNftExceptionCopyWithImpl<$Res, _$InvalidAssetException>
+    implements _$$InvalidAssetExceptionCopyWith<$Res> {
+  __$$InvalidAssetExceptionCopyWithImpl(_$InvalidAssetException _value,
+      $Res Function(_$InvalidAssetException) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$RetrieveAssetException implements RetrieveAssetException {
-  const _$RetrieveAssetException({final String? $type})
-      : $type = $type ?? 'retrieveAsset';
+class _$InvalidAssetException implements InvalidAssetException {
+  const _$InvalidAssetException({final String? $type})
+      : $type = $type ?? 'invalidAsset';
 
-  factory _$RetrieveAssetException.fromJson(Map<String, dynamic> json) =>
-      _$$RetrieveAssetExceptionFromJson(json);
+  factory _$InvalidAssetException.fromJson(Map<String, dynamic> json) =>
+      _$$InvalidAssetExceptionFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'MintNftException.retrieveAsset()';
+    return 'MintNftException.invalidAsset()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RetrieveAssetException);
+        (other.runtimeType == runtimeType && other is _$InvalidAssetException);
   }
 
   @JsonKey(ignore: true)
@@ -269,32 +299,38 @@ class _$RetrieveAssetException implements RetrieveAssetException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
-    required TResult Function() retrieveAsset,
-    required TResult Function() smartContractFailed,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
   }) {
-    return retrieveAsset();
+    return invalidAsset();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
-    TResult? Function()? retrieveAsset,
-    TResult? Function()? smartContractFailed,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
   }) {
-    return retrieveAsset?.call();
+    return invalidAsset?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
-    TResult Function()? retrieveAsset,
-    TResult Function()? smartContractFailed,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
     required TResult orElse(),
   }) {
-    if (retrieveAsset != null) {
-      return retrieveAsset();
+    if (invalidAsset != null) {
+      return invalidAsset();
     }
     return orElse();
   }
@@ -303,88 +339,95 @@ class _$RetrieveAssetException implements RetrieveAssetException {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
-    required TResult Function(RetrieveAssetException value) retrieveAsset,
-    required TResult Function(SmartContractException value) smartContractFailed,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
   }) {
-    return retrieveAsset(this);
+    return invalidAsset(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
-    TResult? Function(RetrieveAssetException value)? retrieveAsset,
-    TResult? Function(SmartContractException value)? smartContractFailed,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
   }) {
-    return retrieveAsset?.call(this);
+    return invalidAsset?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
-    TResult Function(RetrieveAssetException value)? retrieveAsset,
-    TResult Function(SmartContractException value)? smartContractFailed,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
     required TResult orElse(),
   }) {
-    if (retrieveAsset != null) {
-      return retrieveAsset(this);
+    if (invalidAsset != null) {
+      return invalidAsset(this);
     }
     return orElse();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$RetrieveAssetExceptionToJson(
+    return _$$InvalidAssetExceptionToJson(
       this,
     );
   }
 }
 
-abstract class RetrieveAssetException implements MintNftException {
-  const factory RetrieveAssetException() = _$RetrieveAssetException;
+abstract class InvalidAssetException implements MintNftException {
+  const factory InvalidAssetException() = _$InvalidAssetException;
 
-  factory RetrieveAssetException.fromJson(Map<String, dynamic> json) =
-      _$RetrieveAssetException.fromJson;
+  factory InvalidAssetException.fromJson(Map<String, dynamic> json) =
+      _$InvalidAssetException.fromJson;
 }
 
 /// @nodoc
-abstract class _$$SmartContractExceptionCopyWith<$Res> {
-  factory _$$SmartContractExceptionCopyWith(_$SmartContractException value,
-          $Res Function(_$SmartContractException) then) =
-      __$$SmartContractExceptionCopyWithImpl<$Res>;
+abstract class _$$CountFailedExceptionCopyWith<$Res> {
+  factory _$$CountFailedExceptionCopyWith(_$CountFailedException value,
+          $Res Function(_$CountFailedException) then) =
+      __$$CountFailedExceptionCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SmartContractExceptionCopyWithImpl<$Res>
-    extends _$MintNftExceptionCopyWithImpl<$Res, _$SmartContractException>
-    implements _$$SmartContractExceptionCopyWith<$Res> {
-  __$$SmartContractExceptionCopyWithImpl(_$SmartContractException _value,
-      $Res Function(_$SmartContractException) _then)
+class __$$CountFailedExceptionCopyWithImpl<$Res>
+    extends _$MintNftExceptionCopyWithImpl<$Res, _$CountFailedException>
+    implements _$$CountFailedExceptionCopyWith<$Res> {
+  __$$CountFailedExceptionCopyWithImpl(_$CountFailedException _value,
+      $Res Function(_$CountFailedException) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SmartContractException implements SmartContractException {
-  const _$SmartContractException({final String? $type})
-      : $type = $type ?? 'smartContractFailed';
+class _$CountFailedException implements CountFailedException {
+  const _$CountFailedException({final String? $type})
+      : $type = $type ?? 'countFailed';
 
-  factory _$SmartContractException.fromJson(Map<String, dynamic> json) =>
-      _$$SmartContractExceptionFromJson(json);
+  factory _$CountFailedException.fromJson(Map<String, dynamic> json) =>
+      _$$CountFailedExceptionFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'MintNftException.smartContractFailed()';
+    return 'MintNftException.countFailed()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SmartContractException);
+        (other.runtimeType == runtimeType && other is _$CountFailedException);
   }
 
   @JsonKey(ignore: true)
@@ -395,32 +438,38 @@ class _$SmartContractException implements SmartContractException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() invalidAbi,
-    required TResult Function() retrieveAsset,
-    required TResult Function() smartContractFailed,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
   }) {
-    return smartContractFailed();
+    return countFailed();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? invalidAbi,
-    TResult? Function()? retrieveAsset,
-    TResult? Function()? smartContractFailed,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
   }) {
-    return smartContractFailed?.call();
+    return countFailed?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? invalidAbi,
-    TResult Function()? retrieveAsset,
-    TResult Function()? smartContractFailed,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
     required TResult orElse(),
   }) {
-    if (smartContractFailed != null) {
-      return smartContractFailed();
+    if (countFailed != null) {
+      return countFailed();
     }
     return orElse();
   }
@@ -429,47 +478,335 @@ class _$SmartContractException implements SmartContractException {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidAbiException value) invalidAbi,
-    required TResult Function(RetrieveAssetException value) retrieveAsset,
-    required TResult Function(SmartContractException value) smartContractFailed,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
   }) {
-    return smartContractFailed(this);
+    return countFailed(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidAbiException value)? invalidAbi,
-    TResult? Function(RetrieveAssetException value)? retrieveAsset,
-    TResult? Function(SmartContractException value)? smartContractFailed,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
   }) {
-    return smartContractFailed?.call(this);
+    return countFailed?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidAbiException value)? invalidAbi,
-    TResult Function(RetrieveAssetException value)? retrieveAsset,
-    TResult Function(SmartContractException value)? smartContractFailed,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
     required TResult orElse(),
   }) {
-    if (smartContractFailed != null) {
-      return smartContractFailed(this);
+    if (countFailed != null) {
+      return countFailed(this);
     }
     return orElse();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SmartContractExceptionToJson(
+    return _$$CountFailedExceptionToJson(
       this,
     );
   }
 }
 
-abstract class SmartContractException implements MintNftException {
-  const factory SmartContractException() = _$SmartContractException;
+abstract class CountFailedException implements MintNftException {
+  const factory CountFailedException() = _$CountFailedException;
 
-  factory SmartContractException.fromJson(Map<String, dynamic> json) =
-      _$SmartContractException.fromJson;
+  factory CountFailedException.fromJson(Map<String, dynamic> json) =
+      _$CountFailedException.fromJson;
+}
+
+/// @nodoc
+abstract class _$$MintFailedExceptionCopyWith<$Res> {
+  factory _$$MintFailedExceptionCopyWith(_$MintFailedException value,
+          $Res Function(_$MintFailedException) then) =
+      __$$MintFailedExceptionCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$MintFailedExceptionCopyWithImpl<$Res>
+    extends _$MintNftExceptionCopyWithImpl<$Res, _$MintFailedException>
+    implements _$$MintFailedExceptionCopyWith<$Res> {
+  __$$MintFailedExceptionCopyWithImpl(
+      _$MintFailedException _value, $Res Function(_$MintFailedException) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MintFailedException implements MintFailedException {
+  const _$MintFailedException({final String? $type})
+      : $type = $type ?? 'mintFailed';
+
+  factory _$MintFailedException.fromJson(Map<String, dynamic> json) =>
+      _$$MintFailedExceptionFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'MintNftException.mintFailed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$MintFailedException);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() invalidAbi,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
+  }) {
+    return mintFailed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? invalidAbi,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
+  }) {
+    return mintFailed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? invalidAbi,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
+    required TResult orElse(),
+  }) {
+    if (mintFailed != null) {
+      return mintFailed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidAbiException value) invalidAbi,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
+  }) {
+    return mintFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidAbiException value)? invalidAbi,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
+  }) {
+    return mintFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidAbiException value)? invalidAbi,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
+    required TResult orElse(),
+  }) {
+    if (mintFailed != null) {
+      return mintFailed(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MintFailedExceptionToJson(
+      this,
+    );
+  }
+}
+
+abstract class MintFailedException implements MintNftException {
+  const factory MintFailedException() = _$MintFailedException;
+
+  factory MintFailedException.fromJson(Map<String, dynamic> json) =
+      _$MintFailedException.fromJson;
+}
+
+/// @nodoc
+abstract class _$$InconsistentCountExceptionCopyWith<$Res> {
+  factory _$$InconsistentCountExceptionCopyWith(
+          _$InconsistentCountException value,
+          $Res Function(_$InconsistentCountException) then) =
+      __$$InconsistentCountExceptionCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InconsistentCountExceptionCopyWithImpl<$Res>
+    extends _$MintNftExceptionCopyWithImpl<$Res, _$InconsistentCountException>
+    implements _$$InconsistentCountExceptionCopyWith<$Res> {
+  __$$InconsistentCountExceptionCopyWithImpl(
+      _$InconsistentCountException _value,
+      $Res Function(_$InconsistentCountException) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$InconsistentCountException implements InconsistentCountException {
+  const _$InconsistentCountException({final String? $type})
+      : $type = $type ?? 'inconsistentCount';
+
+  factory _$InconsistentCountException.fromJson(Map<String, dynamic> json) =>
+      _$$InconsistentCountExceptionFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'MintNftException.inconsistentCount()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InconsistentCountException);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() invalidAbi,
+    required TResult Function() invalidAsset,
+    required TResult Function() countFailed,
+    required TResult Function() mintFailed,
+    required TResult Function() inconsistentCount,
+  }) {
+    return inconsistentCount();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? invalidAbi,
+    TResult? Function()? invalidAsset,
+    TResult? Function()? countFailed,
+    TResult? Function()? mintFailed,
+    TResult? Function()? inconsistentCount,
+  }) {
+    return inconsistentCount?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? invalidAbi,
+    TResult Function()? invalidAsset,
+    TResult Function()? countFailed,
+    TResult Function()? mintFailed,
+    TResult Function()? inconsistentCount,
+    required TResult orElse(),
+  }) {
+    if (inconsistentCount != null) {
+      return inconsistentCount();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidAbiException value) invalidAbi,
+    required TResult Function(InvalidAssetException value) invalidAsset,
+    required TResult Function(CountFailedException value) countFailed,
+    required TResult Function(MintFailedException value) mintFailed,
+    required TResult Function(InconsistentCountException value)
+        inconsistentCount,
+  }) {
+    return inconsistentCount(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidAbiException value)? invalidAbi,
+    TResult? Function(InvalidAssetException value)? invalidAsset,
+    TResult? Function(CountFailedException value)? countFailed,
+    TResult? Function(MintFailedException value)? mintFailed,
+    TResult? Function(InconsistentCountException value)? inconsistentCount,
+  }) {
+    return inconsistentCount?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidAbiException value)? invalidAbi,
+    TResult Function(InvalidAssetException value)? invalidAsset,
+    TResult Function(CountFailedException value)? countFailed,
+    TResult Function(MintFailedException value)? mintFailed,
+    TResult Function(InconsistentCountException value)? inconsistentCount,
+    required TResult orElse(),
+  }) {
+    if (inconsistentCount != null) {
+      return inconsistentCount(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InconsistentCountExceptionToJson(
+      this,
+    );
+  }
+}
+
+abstract class InconsistentCountException implements MintNftException {
+  const factory InconsistentCountException() = _$InconsistentCountException;
+
+  factory InconsistentCountException.fromJson(Map<String, dynamic> json) =
+      _$InconsistentCountException.fromJson;
 }

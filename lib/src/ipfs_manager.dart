@@ -3,105 +3,82 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:pinata/pinata.dart';
-import 'package:recase/recase.dart';
 
 class IpfsManager {
-  Future<Uri?> retrieveOrUploadAsset({
+  Future<Uri> pinAssets({
     required String identifier,
+    required int sequenceNumber,
     required String name,
     required String? description,
     required Uri firstImage,
     required Uri commonImage,
   }) async {
     try {
-      final normalizedIdentifier = identifier.paramCase;
+      final params = sequenceNumber == 1
+          ? (_buildFirstImageName(identifier), firstImage)
+          : (_buildCommonImageName(identifier), commonImage);
 
-      final (imageCid, count) = await _handleImageAssets(
-        normalizedIdentifier: normalizedIdentifier,
-        firstImageUri: firstImage,
-        commonImageUri: commonImage,
-      );
-
+      final imageCid = await _retrieveOrCreateImage(params.$1, params.$2);
       final metadataPin = await _createMetadata(
-        identifier: normalizedIdentifier,
+        identifier: identifier,
         name: name,
-        count: count,
+        sequenceNumber: sequenceNumber,
         imageCid: imageCid,
         description: description,
       );
 
       return _buildIpfsUri(metadataPin.address);
+    } on MintNftException {
+      rethrow;
     } on Exception {
-      return null;
+      throw MintNftException.invalidAsset();
     }
   }
 
-  Future<(String, int)> _handleImageAssets({
-    required String normalizedIdentifier,
-    required Uri firstImageUri,
-    required Uri commonImageUri,
-  }) async {
-    final commonImageName = _buildCommonImageName(normalizedIdentifier);
-    final commonImageIpfs = await _pinata
-        .queryPins(name: commonImageName) //
+  Future<String> _retrieveOrCreateImage(String imageName, Uri image) async {
+    final existingImageIpfs = await _pinata
+        .queryPins(name: imageName, status: PinStatus.pinned) //
         .then((it) => it.firstOrNull);
 
-    if (commonImageIpfs != null) {
-      final count = (commonImageIpfs.metaAt<int>(_countKey) ?? 1) + 1;
-      await commonImageIpfs.updateMeta(meta: {_countKey: count});
+    if (existingImageIpfs != null) return existingImageIpfs.address;
 
-      return (commonImageIpfs.address, count);
-    }
-
-    final firstImageName = _buildFirstImageName(normalizedIdentifier);
-    final firstImageIpfs = await _pinata
-        .queryPins(name: firstImageName) //
-        .then((it) => it.firstOrNull);
-
-    if (firstImageIpfs != null) {
-      return _createImage(commonImageName, commonImageUri, 2);
-    }
-
-    return _createImage(firstImageName, firstImageUri, 1);
-  }
-
-  Future<(String, int)> _createImage(String name, Uri image, int count) async {
+    // Uploads image to IPFS
     final imagePin = await _pinata.pinBytes(
       await http.get(image).then((it) => it.bodyBytes),
-      name: name,
-      meta: {_countKey: count},
+      name: imageName,
     );
 
-    return (imagePin.address, count);
+    return imagePin.address;
   }
 
   Future<PinLink> _createMetadata({
     required String identifier,
     required String name,
-    required int count,
+    required int sequenceNumber,
     required String imageCid,
     String? description,
   }) async {
     final metadataJson = {
-      'name': '$name$count',
+      'name': '$name$sequenceNumber',
       'image': _buildIpfsUri(imageCid).toString(),
       if (description != null) 'description': description,
     };
 
     return await _pinata.pinBytes(
       Uint8List.fromList(utf8.encode(jsonEncode(metadataJson))),
-      name: _buildMetadataName('$identifier-$count'),
+      name: _buildMetadataName(identifier, sequenceNumber),
     );
   }
 }
 
 Uri _buildIpfsUri(String cid) => Uri(scheme: 'ipfs', host: cid);
-String _buildMetadataName(String name) => '$name-metadata.json';
 String _buildFirstImageName(String name) => '$name-first-image.jpg';
 String _buildCommonImageName(String name) => '$name-common-image.jpg';
+String _buildMetadataName(String name, int sequenceNumber) =>
+    '$name-$sequenceNumber-metadata.json';
 
-const _countKey = 'count';
 final _pinata = Pinata.viaPair(
   apiKey: io.Platform.environment['PINATA_KEY'] ?? '',
   secret: io.Platform.environment['PINATA_SECRET'] ?? '',

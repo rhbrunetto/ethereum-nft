@@ -25,7 +25,7 @@ class EthManager {
           .then((it) => it['result'] as String);
 
       return DeployedContract(
-        ContractAbi.fromJson(contractAbi, 'NFT'),
+        ContractAbi.fromJson(contractAbi, 'MountainsNFT'),
         contractId,
       );
     } on Exception {

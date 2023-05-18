@@ -28,7 +28,7 @@ Future<Response> processRequest<T, R>(
       },
     );
   } on MintNftException catch (e) {
-    return Response.badRequest(
+    return Response.internalServerError(
       body: json.encode(e.toJson()),
       headers: {
         'content-type': 'application/json',

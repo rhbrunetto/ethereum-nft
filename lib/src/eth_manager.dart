@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:nft/src/models/eth_provider.dart';
+import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:web3dart/web3dart.dart';
 
 class EthManager {
@@ -8,7 +9,11 @@ class EthManager {
 
   final EthProvider _provider;
 
-  Future<DeployedContract?> getContractAbi(EthereumAddress contractId) async {
+  DeployedContract? _cachedContract;
+
+  Future<DeployedContract> getContractAbi(EthereumAddress contractId) async {
+    if (_cachedContract != null) return _cachedContract!;
+
     try {
       final abiUrl = Uri.parse(_provider.abiBaseUrl).replace(
         queryParameters: {
@@ -24,19 +29,44 @@ class EthManager {
           .then(jsonDecode)
           .then((it) => it['result'] as String);
 
-      return DeployedContract(
+      final contract = DeployedContract(
         ContractAbi.fromJson(contractAbi, 'MountainsNFT'),
         contractId,
       );
+
+      _cachedContract = contract;
+
+      return contract;
     } on Exception {
-      return null;
+      throw MintNftException.invalidAbi();
     }
   }
 
-  Future<bool> writeNft({
+  Future<BigInt> getCount({
+    required DeployedContract contract,
+    required String normalizedIdentifier,
+  }) async {
+    final countFunction = contract.function('nextForIdentifier');
+
+    try {
+      final count = await _provider.web3client.call(
+        contract: contract,
+        function: countFunction,
+        params: [normalizedIdentifier],
+      ).then((it) => it.first as BigInt);
+
+      return count;
+    } on Exception {
+      throw MintNftException.countFailed();
+    }
+  }
+
+  Future<void> writeNft({
     required DeployedContract contract,
     required EthPrivateKey credentials,
     required Uri asset,
+    required String identifier,
+    required BigInt count,
   }) async {
     try {
       final chainId = await _provider.web3client.getChainId();
@@ -52,14 +82,14 @@ class EthManager {
           parameters: [
             credentials.address,
             asset.toString(),
+            identifier,
+            count,
           ],
         ),
         chainId: chainId.toInt(),
       );
-
-      return true;
     } on Exception {
-      return false;
+      throw MintNftException.mintFailed();
     }
   }
 }

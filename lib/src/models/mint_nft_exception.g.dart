@@ -18,24 +18,50 @@ Map<String, dynamic> _$$InvalidAbiExceptionToJson(
       'runtimeType': instance.$type,
     };
 
-_$NoPriceException _$$NoPriceExceptionFromJson(Map<String, dynamic> json) =>
-    _$NoPriceException(
+_$InvalidAssetException _$$InvalidAssetExceptionFromJson(
+        Map<String, dynamic> json) =>
+    _$InvalidAssetException(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$NoPriceExceptionToJson(_$NoPriceException instance) =>
+Map<String, dynamic> _$$InvalidAssetExceptionToJson(
+        _$InvalidAssetException instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$RetrieveAssetException _$$RetrieveAssetExceptionFromJson(
+_$CountFailedException _$$CountFailedExceptionFromJson(
         Map<String, dynamic> json) =>
-    _$RetrieveAssetException(
+    _$CountFailedException(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$RetrieveAssetExceptionToJson(
-        _$RetrieveAssetException instance) =>
+Map<String, dynamic> _$$CountFailedExceptionToJson(
+        _$CountFailedException instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$MintFailedException _$$MintFailedExceptionFromJson(
+        Map<String, dynamic> json) =>
+    _$MintFailedException(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$MintFailedExceptionToJson(
+        _$MintFailedException instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$InconsistentCountException _$$InconsistentCountExceptionFromJson(
+        Map<String, dynamic> json) =>
+    _$InconsistentCountException(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$InconsistentCountExceptionToJson(
+        _$InconsistentCountException instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };

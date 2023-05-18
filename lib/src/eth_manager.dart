@@ -33,22 +33,6 @@ class EthManager {
     }
   }
 
-  Future<BigInt?> getNftPrice(DeployedContract contract) async {
-    final priceFunction = contract.function('price');
-
-    try {
-      final price = await _provider.web3client.call(
-        contract: contract,
-        function: priceFunction,
-        params: [],
-      ).then((it) => it.first as BigInt);
-
-      return price;
-    } on Exception {
-      return null;
-    }
-  }
-
   Future<bool> writeNft({
     required DeployedContract contract,
     required EthPrivateKey credentials,

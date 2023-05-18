@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io' as io;
 import 'dart:typed_data';
 
@@ -16,56 +15,75 @@ class IpfsManager {
   }) async {
     try {
       final normalizedIdentifier = identifier.paramCase;
-      final metadataName = _buildMetadataName(normalizedIdentifier);
 
-      final existingIpfs = await _pinata
-          .queryPins(name: metadataName)
-          .then((it) => it.firstOrNull);
+      final (imageCid, count) = await _retrieveOrCreateImage(
+        normalizedIdentifier: normalizedIdentifier,
+        image: image,
+      );
 
-      final String ipfsAddress;
-      if (existingIpfs != null) {
-        ipfsAddress = existingIpfs.address;
-      } else {
-        ipfsAddress = await _createAsset(
-          identifier: normalizedIdentifier,
-          name: name,
-          image: image,
-          description: description,
-        ).then((it) => it.address);
-      }
+      final metadataPin = await _createMetadata(
+        identifier: normalizedIdentifier,
+        name: name,
+        count: count,
+        imageCid: imageCid,
+        description: description,
+      );
 
-      log('NFT Address: $ipfsAddress');
-
-      return _buildIpfsUri(ipfsAddress);
+      return _buildIpfsUri(metadataPin.address);
     } on Exception {
       return null;
     }
   }
 
-  Future<PinLink> _createAsset({
+  Future<(String, int)> _retrieveOrCreateImage({
+    required String normalizedIdentifier,
+    required Uri image,
+  }) async {
+    final String imageCid;
+    final int count;
+
+    final imageName = _buildImageName(normalizedIdentifier);
+    final existingImageIpfs = await _pinata
+        .queryPins(name: imageName) //
+        .then((it) => it.firstOrNull);
+
+    if (existingImageIpfs != null) {
+      imageCid = existingImageIpfs.address;
+      count = existingImageIpfs.metaAt(_countKey) ?? 1;
+
+      // Increments current image uses
+      await existingImageIpfs.updateMeta(meta: {_countKey: count + 1});
+    } else {
+      // Uploads image to IPFS
+      final imagePin = await _pinata.pinBytes(
+        await http.get(image).then((it) => it.bodyBytes),
+        name: imageName,
+        meta: {_countKey: 1},
+      );
+
+      imageCid = imagePin.address;
+      count = 1;
+    }
+
+    return (imageCid, count);
+  }
+
+  Future<PinLink> _createMetadata({
     required String identifier,
     required String name,
-    required Uri image,
+    required int count,
+    required String imageCid,
     String? description,
   }) async {
-    // Upload image
-    final imageBytes = await http.get(image).then((it) => it.bodyBytes);
-    final imagePin = await _pinata.pinBytes(
-      imageBytes,
-      name: _buildImageName(identifier),
-    );
-
-    // Upload metadata
     final metadataJson = {
-      'name': name,
+      'name': '$name$count',
+      'image': _buildIpfsUri(imageCid).toString(),
       if (description != null) 'description': description,
-      'image': _buildIpfsUri(imagePin.address).toString(),
     };
 
     return await _pinata.pinBytes(
       Uint8List.fromList(utf8.encode(jsonEncode(metadataJson))),
-      name: _buildMetadataName(identifier),
-      meta: {_countKey: 1},
+      name: _buildMetadataName('$identifier-$count'),
     );
   }
 }
@@ -73,8 +91,9 @@ class IpfsManager {
 Uri _buildIpfsUri(String cid) => Uri(scheme: 'ipfs', host: cid);
 String _buildMetadataName(String name) => '$name-metadata.json';
 String _buildImageName(String name) => '$name-image.jpg';
-const _countKey = 'count';
 
+const _countKey = 'count';
 final _pinata = Pinata.viaPair(
-    apiKey: io.Platform.environment['PINATA_KEY'] ?? '',
-    secret: io.Platform.environment['PINATA_SECRET'] ?? '');
+  apiKey: io.Platform.environment['PINATA_KEY'] ?? '',
+  secret: io.Platform.environment['PINATA_SECRET'] ?? '',
+);

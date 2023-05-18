@@ -11,6 +11,7 @@ _$_MintNftRequiest _$$_MintNftRequiestFromJson(Map<String, dynamic> json) =>
       identifier: json['identifier'] as String,
       title: json['title'] as String,
       image: Uri.parse(json['image'] as String),
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$_MintNftRequiestToJson(_$_MintNftRequiest instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_MintNftRequiestToJson(_$_MintNftRequiest instance) =>
       'identifier': instance.identifier,
       'title': instance.title,
       'image': instance.image.toString(),
+      'description': instance.description,
     };

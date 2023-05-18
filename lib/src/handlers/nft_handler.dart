@@ -62,6 +62,7 @@ Future<Response> _nftRouteHandler(
           identifier: data.identifier,
           name: data.title,
           image: data.image,
+          description: data.description,
         );
         if (metadata == null) throw MintNftException.retrieveAsset();
 

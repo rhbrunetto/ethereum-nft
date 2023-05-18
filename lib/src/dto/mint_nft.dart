@@ -9,6 +9,7 @@ class MintNftRequest with _$MintNftRequest {
     required String identifier,
     required String title,
     required Uri image,
+    String? description,
   }) = _MintNftRequiest;
 
   factory MintNftRequest.fromJson(Map<String, dynamic> json) =>

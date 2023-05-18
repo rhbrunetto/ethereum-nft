@@ -11,6 +11,7 @@ class IpfsManager {
   Future<Uri?> retrieveOrUploadAsset({
     required String identifier,
     required String name,
+    required String? description,
     required Uri image,
   }) async {
     try {
@@ -19,14 +20,18 @@ class IpfsManager {
 
       final existingIpfs = await _pinata
           .queryPins(name: metadataName)
-          .then((it) => it.firstOrNull?.address);
+          .then((it) => it.firstOrNull);
 
       final String ipfsAddress;
       if (existingIpfs != null) {
-        ipfsAddress = existingIpfs;
+        ipfsAddress = existingIpfs.address;
       } else {
-        ipfsAddress = await _createAsset(normalizedIdentifier, name, image)
-            .then((it) => it.address);
+        ipfsAddress = await _createAsset(
+          identifier: normalizedIdentifier,
+          name: name,
+          image: image,
+          description: description,
+        ).then((it) => it.address);
       }
 
       log('NFT Address: $ipfsAddress');
@@ -37,11 +42,12 @@ class IpfsManager {
     }
   }
 
-  Future<PinLink> _createAsset(
-    String identifier,
-    String name,
-    Uri image,
-  ) async {
+  Future<PinLink> _createAsset({
+    required String identifier,
+    required String name,
+    required Uri image,
+    String? description,
+  }) async {
     // Upload image
     final imageBytes = await http.get(image).then((it) => it.bodyBytes);
     final imagePin = await _pinata.pinBytes(
@@ -49,15 +55,17 @@ class IpfsManager {
       name: _buildImageName(identifier),
     );
 
-    // Uploads and returns Metadata
+    // Upload metadata
     final metadataJson = {
       'name': name,
+      if (description != null) 'description': description,
       'image': _buildIpfsUri(imagePin.address).toString(),
     };
 
     return await _pinata.pinBytes(
       Uint8List.fromList(utf8.encode(jsonEncode(metadataJson))),
       name: _buildMetadataName(identifier),
+      meta: {_countKey: 1},
     );
   }
 }
@@ -65,6 +73,7 @@ class IpfsManager {
 Uri _buildIpfsUri(String cid) => Uri(scheme: 'ipfs', host: cid);
 String _buildMetadataName(String name) => '$name-metadata.json';
 String _buildImageName(String name) => '$name-image.jpg';
+const _countKey = 'count';
 
 final _pinata = Pinata.viaPair(
     apiKey: io.Platform.environment['PINATA_KEY'] ?? '',

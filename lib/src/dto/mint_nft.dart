@@ -4,14 +4,28 @@ part 'mint_nft.freezed.dart';
 part 'mint_nft.g.dart';
 
 @freezed
-class MintNftRequest with _$MintNftRequest {
-  const factory MintNftRequest({
+class MintNftRequestDto with _$MintNftRequestDto {
+  const factory MintNftRequestDto({
     required String identifier,
     required String title,
-    required Uri image,
+    required ImageSetDto imageSet,
     String? description,
-  }) = _MintNftRequiest;
+  }) = _MintNftRequiestDto;
 
-  factory MintNftRequest.fromJson(Map<String, dynamic> json) =>
-      _$MintNftRequestFromJson(json);
+  factory MintNftRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$MintNftRequestDtoFromJson(json);
 }
+
+@freezed
+class ImageSetDto with _$ImageSetDto {
+
+  const factory ImageSetDto({
+    required Uri firstNftImage,
+    required Uri commonNftImage,
+  }) = _ImageSetDto;
+
+  factory ImageSetDto.fromJson(Map<String, dynamic> json) =>
+      _$ImageSetDtoFromJson(json);
+
+}
+

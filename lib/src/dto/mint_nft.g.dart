@@ -6,18 +6,32 @@ part of 'mint_nft.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MintNftRequiest _$$_MintNftRequiestFromJson(Map<String, dynamic> json) =>
-    _$_MintNftRequiest(
+_$_MintNftRequiestDto _$$_MintNftRequiestDtoFromJson(
+        Map<String, dynamic> json) =>
+    _$_MintNftRequiestDto(
       identifier: json['identifier'] as String,
       title: json['title'] as String,
-      image: Uri.parse(json['image'] as String),
+      imageSet: ImageSetDto.fromJson(json['imageSet'] as Map<String, dynamic>),
       description: json['description'] as String?,
     );
 
-Map<String, dynamic> _$$_MintNftRequiestToJson(_$_MintNftRequiest instance) =>
+Map<String, dynamic> _$$_MintNftRequiestDtoToJson(
+        _$_MintNftRequiestDto instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'title': instance.title,
-      'image': instance.image.toString(),
+      'imageSet': instance.imageSet,
       'description': instance.description,
+    };
+
+_$_ImageSetDto _$$_ImageSetDtoFromJson(Map<String, dynamic> json) =>
+    _$_ImageSetDto(
+      firstNftImage: Uri.parse(json['firstNftImage'] as String),
+      commonNftImage: Uri.parse(json['commonNftImage'] as String),
+    );
+
+Map<String, dynamic> _$$_ImageSetDtoToJson(_$_ImageSetDto instance) =>
+    <String, dynamic>{
+      'firstNftImage': instance.firstNftImage.toString(),
+      'commonNftImage': instance.commonNftImage.toString(),
     };

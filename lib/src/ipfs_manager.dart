@@ -11,14 +11,16 @@ class IpfsManager {
     required String identifier,
     required String name,
     required String? description,
-    required Uri image,
+    required Uri firstImage,
+    required Uri commonImage,
   }) async {
     try {
       final normalizedIdentifier = identifier.paramCase;
 
-      final (imageCid, count) = await _retrieveOrCreateImage(
+      final (imageCid, count) = await _handleImageAssets(
         normalizedIdentifier: normalizedIdentifier,
-        image: image,
+        firstImageUri: firstImage,
+        commonImageUri: commonImage,
       );
 
       final metadataPin = await _createMetadata(
@@ -35,37 +37,47 @@ class IpfsManager {
     }
   }
 
-  Future<(String, int)> _retrieveOrCreateImage({
+  Future<(String, int)> _handleImageAssets({
     required String normalizedIdentifier,
-    required Uri image,
+    required Uri firstImageUri,
+    required Uri commonImageUri,
   }) async {
-    final String imageCid;
-    final int count;
-
-    final imageName = _buildImageName(normalizedIdentifier);
-    final existingImageIpfs = await _pinata
-        .queryPins(name: imageName) //
+    final commonImageName = _buildCommonImageName(normalizedIdentifier);
+    final commonImageIpfs = await _pinata
+        .queryPins(name: commonImageName) //
         .then((it) => it.firstOrNull);
 
-    if (existingImageIpfs != null) {
-      imageCid = existingImageIpfs.address;
-      count = existingImageIpfs.metaAt(_countKey) ?? 1;
+    if (commonImageIpfs != null) {
+      // Common image already exists, so update counter and return it
+      final count = commonImageIpfs.metaAt<int>(_countKey) ?? 1;
+      await commonImageIpfs.updateMeta(meta: {_countKey: count + 1});
 
-      // Increments current image uses
-      await existingImageIpfs.updateMeta(meta: {_countKey: count + 1});
-    } else {
-      // Uploads image to IPFS
-      final imagePin = await _pinata.pinBytes(
-        await http.get(image).then((it) => it.bodyBytes),
-        name: imageName,
-        meta: {_countKey: 1},
-      );
-
-      imageCid = imagePin.address;
-      count = 1;
+      return (commonImageIpfs.address, count);
     }
 
-    return (imageCid, count);
+    // Common image does not exist yet, so let's check for the first image
+    final firstImageName = _buildFirstImageName(normalizedIdentifier);
+    final firstImageIpfs = await _pinata
+        .queryPins(name: firstImageName) //
+        .then((it) => it.firstOrNull);
+
+    if (firstImageIpfs != null) {
+      // First image already exists, should create the common image
+      return _createImage(commonImageName, commonImageUri, 2);
+    }
+
+    // This is the first NFT image
+    return _createImage(firstImageName, firstImageUri, 1);
+  }
+
+  Future<(String, int)> _createImage(String name, Uri image, int count) async {
+    final imagePin = await _pinata.pinBytes(
+      await http.get(image).then((it) => it.bodyBytes),
+      name: name,
+      meta: {_countKey: count},
+    );
+
+    return (imagePin.address, count);
   }
 
   Future<PinLink> _createMetadata({
@@ -90,7 +102,8 @@ class IpfsManager {
 
 Uri _buildIpfsUri(String cid) => Uri(scheme: 'ipfs', host: cid);
 String _buildMetadataName(String name) => '$name-metadata.json';
-String _buildImageName(String name) => '$name-image.jpg';
+String _buildFirstImageName(String name) => '$name-first-image.jpg';
+String _buildCommonImageName(String name) => '$name-common-image.jpg';
 
 const _countKey = 'count';
 final _pinata = Pinata.viaPair(

@@ -51,9 +51,9 @@ Future<Response> _nftRouteHandler(
   required EthereumAddress contractId,
   required EthPrivateKey credentials,
 }) async =>
-    processRequest<MintNftRequest, Json>(
+    processRequest<MintNftRequestDto, Json>(
       request,
-      MintNftRequest.fromJson,
+      MintNftRequestDto.fromJson,
       (data) async {
         final contract = await ethManager.getContractAbi(contractId);
         if (contract == null) throw MintNftException.invalidAbi();
@@ -61,7 +61,8 @@ Future<Response> _nftRouteHandler(
         final metadata = await ipfsManager.retrieveOrUploadAsset(
           identifier: data.identifier,
           name: data.title,
-          image: data.image,
+          firstImage: data.imageSet.firstNftImage,
+          commonImage: data.imageSet.commonNftImage,
           description: data.description,
         );
         if (metadata == null) throw MintNftException.retrieveAsset();

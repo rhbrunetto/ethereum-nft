@@ -1,7 +1,6 @@
-import 'dart:io' as io;
-
 import 'package:http/http.dart' as http;
 import 'package:nft/src/dto/mint_nft.dart';
+import 'package:nft/src/env/env.dart';
 import 'package:nft/src/eth_manager.dart';
 import 'package:nft/src/ipfs_manager.dart';
 import 'package:nft/src/models/eth_provider.dart';
@@ -13,10 +12,10 @@ import 'package:shelf_router/shelf_router.dart' as shelf_router;
 import 'package:web3dart/web3dart.dart';
 
 Handler addNftHandler() {
-  final rpcUrl = io.Platform.environment['RPC_URL'] ?? '';
-  final abiUrl = io.Platform.environment['ABI_URL'] ?? '';
-  final privateKey = io.Platform.environment['PRIVATE_KEY'] ?? '';
-  final contractId = io.Platform.environment['CONTRACT_ID'] ?? '';
+  final rpcUrl = Env.rpcUrl;
+  final abiUrl = Env.abiUrl;
+  final privateKey = Env.privateKey;
+  final contractId = Env.contractId;
 
   final provider = EthProvider(
     abiBaseUrl: abiUrl,

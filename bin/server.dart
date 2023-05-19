@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io' as io;
 
+import 'package:nft/src/env/env.dart';
 import 'package:nft/src/handlers/nft_handler.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shelf/shelf.dart';
@@ -8,17 +9,15 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
 
 Future<void> main() async {
-  final sentryDsn = io.Platform.environment['SENTRY_DSN'];
+  final sentryDsn = Env.sentryDSN;
 
-  if (sentryDsn != null) {
-    await Sentry.init((options) {
-      options
-        ..dsn = sentryDsn
-        ..tracesSampleRate = 1.0;
-    });
-  }
+  await Sentry.init((options) {
+    options
+      ..dsn = sentryDsn
+      ..tracesSampleRate = 1.0;
+  });
 
-  final port = int.parse(io.Platform.environment['PORT'] ?? '8080');
+  final port = int.parse(Env.port);
 
   final errorReporter = createMiddleware(
     errorHandler: (error, stacktrace) async {

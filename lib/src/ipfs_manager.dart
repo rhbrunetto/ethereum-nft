@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io' as io;
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:nft/src/env/env.dart';
 import 'package:nft/src/models/mint_nft_exception.dart';
 import 'package:pinata/pinata.dart';
 
@@ -80,6 +80,6 @@ String _buildMetadataName(String name, int sequenceNumber) =>
     '$name-$sequenceNumber-metadata.json';
 
 final _pinata = Pinata.viaPair(
-  apiKey: io.Platform.environment['PINATA_KEY'] ?? '',
-  secret: io.Platform.environment['PINATA_SECRET'] ?? '',
+  apiKey: Env.pinataKey,
+  secret: Env.pinataSecret,
 );
